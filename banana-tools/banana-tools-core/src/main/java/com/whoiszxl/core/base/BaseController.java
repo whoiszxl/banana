@@ -38,7 +38,7 @@ import java.util.List;
  */
 @Slf4j
 @NoArgsConstructor
-public abstract class BaseController<S extends IService<M>, M, R, Q, A, U> {
+public abstract class  BaseController<S extends IService<M>, M, R, Q, A, U> {
 
     @Autowired
     protected S baseService;
@@ -60,7 +60,7 @@ public abstract class BaseController<S extends IService<M>, M, R, Q, A, U> {
 
     @Operation(summary = "分页查询列表")
     @ResponseBody
-    @GetMapping
+    @GetMapping("/page")
     protected ResponseResult<PageResponse<R>> page(@Validated Q query, @Validated PageQuery pageQuery) {
         this.checkPermission(PermissionNameEnum.LIST.getName());
         QueryWrapper<M> queryWrapper = Wrappers.query();
@@ -83,8 +83,6 @@ public abstract class BaseController<S extends IService<M>, M, R, Q, A, U> {
         List<R> resultList = responseList(query);
         return ResponseResult.buildSuccess(resultList);
     }
-
-
 
     @Operation(summary = "新增数据")
     @ResponseBody
@@ -247,7 +245,7 @@ public abstract class BaseController<S extends IService<M>, M, R, Q, A, U> {
      * @param query 查询条件
      * @return
      */
-    private List<R> responseList(Q query) {
+    public List<R> responseList(Q query) {
         QueryWrapper<M> queryWrapper = Wrappers.query();
 
         Class<?> queryClazz = query.getClass();

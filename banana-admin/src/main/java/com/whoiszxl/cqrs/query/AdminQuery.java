@@ -7,6 +7,7 @@ import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author whoiszxl
@@ -24,14 +25,8 @@ public class AdminQuery {
     @Query
     private Integer status;
 
-    @Schema(description = "start创建时间")
+    @Schema(description = "创建时间区间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Query(type = Query.Type.GREATER_THAN_OR_EQUAL, property = "created_at")
-    private Date startCreatedAt;
-
-    @Schema(description = "end创建时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Query(type = Query.Type.LESS_THAN_OR_EQUAL, property = "created_at")
-    private Date endCreatedAt;
-
+    @Query(type = Query.Type.BETWEEN, property = "created_at")
+    private List<Date> createdAt;
 }

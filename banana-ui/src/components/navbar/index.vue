@@ -10,7 +10,7 @@
           :style="{ margin: 0, fontSize: '18px' }"
           :heading="5"
         >
-          Arco Pro
+          Banana
         </a-typography-title>
         <icon-menu-fold
           v-if="!topMenu && appStore.device === 'mobile'"
@@ -154,14 +154,6 @@
           </a-avatar>
           <template #content>
             <a-doption>
-              <a-space @click="switchRoles">
-                <icon-tag />
-                <span>
-                  {{ $t('messageBox.switchRoles') }}
-                </span>
-              </a-space>
-            </a-doption>
-            <a-doption>
               <a-space @click="$router.push({ name: 'Info' })">
                 <icon-user />
                 <span>
@@ -196,12 +188,13 @@
   import { computed, ref, inject } from 'vue';
   import { Message } from '@arco-design/web-vue';
   import { useDark, useToggle, useFullscreen } from '@vueuse/core';
-  import { useAppStore, useUserStore } from '@/store';
+  import { useAppStore, useUserStore, useLoginStore } from '@/store';
   import { LOCALE_OPTIONS } from '@/locale';
   import useLocale from '@/hooks/locale';
   import useUser from '@/hooks/user';
   import Menu from '@/components/menu/index.vue';
   import MessageBox from '../message-box/index.vue';
+
 
   const appStore = useAppStore();
   const userStore = useUserStore();
@@ -209,8 +202,11 @@
   const { changeLocale, currentLocale } = useLocale();
   const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
   const locales = [...LOCALE_OPTIONS];
+
+  const loginStore = useLoginStore();
+
   const avatar = computed(() => {
-    return userStore.avatar;
+    return loginStore.avatar;
   });
   const theme = computed(() => {
     return appStore.theme;

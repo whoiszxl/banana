@@ -1,12 +1,17 @@
 package com.whoiszxl.cqrs.command;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+
+import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 /**
  * @author whoiszxl
  */
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Schema(description = "管理员更新命令")
 public class AdminUpdateCommand {
 
@@ -39,4 +44,9 @@ public class AdminUpdateCommand {
 
     @Schema(description = "谷歌验证码是否开启，默认不开启 0-不开启； 1-开启")
     private Integer googleStatus;
+
+    @Schema(description = "所属角色")
+    @NotEmpty(message = "所属角色不能为空")
+    private List<Integer> roleIds;
+
 }

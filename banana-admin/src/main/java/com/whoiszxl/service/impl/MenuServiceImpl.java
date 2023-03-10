@@ -1,12 +1,17 @@
 package com.whoiszxl.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.whoiszxl.cqrs.command.MenuAddCommand;
+import com.whoiszxl.cqrs.command.MenuUpdateCommand;
 import com.whoiszxl.entity.Menu;
 import com.whoiszxl.mapper.MenuMapper;
 import com.whoiszxl.service.IMenuService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,14 +23,35 @@ import java.util.Set;
  * @since 2023-03-02
  */
 @Service
+@RequiredArgsConstructor
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IMenuService {
 
-    @Autowired
-    private MenuMapper menuMapper;
-
+    private final MenuMapper menuMapper;
 
     @Override
     public Set<String> listPermissionsByAdminId(Integer adminId) {
         return menuMapper.listPermissionsByAdminId(adminId);
+    }
+
+    @Override
+    public void addMenu(MenuAddCommand command) {
+        boolean exists = this.lambdaQuery().eq(Menu::getName, command.getName()).exists();
+        Assert.isFalse(exists, "菜单已存在");
+        Menu menu = BeanUtil.copyProperties(command, Menu.class);
+        this.save(menu);
+    }
+
+    @Override
+    public void updateMenu(MenuUpdateCommand command) {
+        boolean exists = this.lambdaQuery().eq(Menu::getName, command.getName()).exists();
+        Assert.isFalse(exists, "菜单已存在");
+        Menu menu = BeanUtil.copyProperties(command, Menu.class);
+        this.updateById(menu);
+    }
+
+    @Override
+    public void deleteMenu(List<Integer> ids) {
+        this.removeBatchByIds(ids);
+        this.lambdaUpdate().in(Menu::getParentId, ids).remove();
     }
 }

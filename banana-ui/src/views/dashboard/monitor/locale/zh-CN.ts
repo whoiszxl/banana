@@ -1,4 +1,5 @@
 export default {
+  'menu.dashboard.test': '测试添加',
   'menu.dashboard.monitor': '实时监控',
   'monitor.title.chatPanel': '聊天窗口',
   'monitor.title.quickOperation': '快捷操作',

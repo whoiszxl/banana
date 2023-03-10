@@ -1,6 +1,6 @@
 package com.whoiszxl.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.whoiszxl.core.base.BaseMapper;
 import com.whoiszxl.entity.RoleMenu;
 import org.apache.ibatis.annotations.Mapper;
 

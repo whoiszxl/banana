@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -13,9 +14,9 @@ import java.util.List;
 @Schema(description = "管理员角色修改命令")
 public class AdminRoleUpdateCommand {
 
-    @NotEmpty(message = "管理员ID不能为空")
+    @NotNull(message = "管理员ID不能为空")
     @Schema(description = "管理员ID")
-    private Integer adminId;
+    private Integer id;
 
     @NotEmpty(message = "角色ID集合不能为空")
     @Schema(description = "需要修改的角色ID集合")

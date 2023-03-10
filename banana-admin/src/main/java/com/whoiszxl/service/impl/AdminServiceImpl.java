@@ -2,18 +2,27 @@ package com.whoiszxl.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.whoiszxl.core.constants.CommonConstants;
 import com.whoiszxl.core.utils.SecureUtils;
 import com.whoiszxl.cqrs.command.AdminAddCommand;
 import com.whoiszxl.cqrs.command.AdminRoleUpdateCommand;
+import com.whoiszxl.cqrs.command.AdminUpdateCommand;
+import com.whoiszxl.cqrs.response.AdminDetailResponse;
 import com.whoiszxl.entity.Admin;
+import com.whoiszxl.entity.AdminRole;
 import com.whoiszxl.mapper.AdminMapper;
 import com.whoiszxl.service.IAdminRoleService;
 import com.whoiszxl.service.IAdminService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.whoiszxl.service.IRoleService;
+import com.whoiszxl.service.PermissionService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -24,13 +33,16 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 2023-03-02
  */
 @Service
+@RequiredArgsConstructor
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements IAdminService {
 
-    @Autowired
-    private IAdminRoleService adminRoleService;
+    private final IAdminRoleService adminRoleService;
 
-    @Autowired
-    private AdminMapper adminMapper;
+    private final AdminMapper adminMapper;
+
+    private final PermissionService permissionService;
+
+    private final IRoleService roleService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -56,10 +68,69 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateAdminRole(AdminRoleUpdateCommand command) {
-        Admin admin = adminMapper.selectById(command.getAdminId());
+        Admin admin = adminMapper.selectById(command.getId());
         Assert.notNull(admin, "管理员不存在");
 
-        adminRoleService.resetRole(command.getRoleIds(), command.getAdminId());
-        return null;
+        adminRoleService.resetRole(command.getRoleIds(), command.getId());
+        return true;
+    }
+
+    @Override
+    public Boolean switchStatus(Integer adminId) {
+        return adminMapper.switchStatus(adminId);
+    }
+
+    @Override
+    public Boolean resetPassword(Integer adminId) {
+        Admin admin = this.getById(adminId);
+        admin.setPassword(SecureUtils.passwordMd5(CommonConstants.DEFAULT_PASSWORD, CommonConstants.PASSWORD_SALT));
+        baseMapper.updateById(admin);
+        return true;
+    }
+
+    @Override
+    public AdminDetailResponse adminDetail(Integer adminId) {
+        Set<String> roles = permissionService.listRoleByAdminId(adminId);
+        Set<Integer> roleIds = roleService.listRoleIdByAdminId(adminId);
+        Admin admin = this.getById(adminId);
+        AdminDetailResponse detailResponse = BeanUtil.copyProperties(admin, AdminDetailResponse.class);
+        detailResponse.setRoles(roles);
+        detailResponse.setRoleIds(roleIds);
+        return detailResponse;
+    }
+
+    @Override
+    public boolean updateAdmin(AdminUpdateCommand adminUpdateCommand) {
+        String username = adminUpdateCommand.getUsername();
+        boolean exists = this.lambdaQuery().eq(Admin::getUsername, username).ne(Admin::getId, adminUpdateCommand.getId()).exists();
+        Assert.isFalse(exists, "此用户已存在，请更换用户名");
+
+        Admin admin = BeanUtil.copyProperties(adminUpdateCommand, Admin.class);
+        if(StrUtil.isNotBlank(admin.getPassword())) {
+            admin.setPassword(SecureUtils.passwordMd5(admin.getPassword(), CommonConstants.PASSWORD_SALT));
+        }else {
+            admin.setPassword(null);
+        }
+
+        adminMapper.updateById(admin);
+
+        adminRoleService.save(adminUpdateCommand.getRoleIds(), admin.getId());
+
+        return true;
+    }
+
+    @Override
+    public boolean adminDelete(List<Integer> ids) {
+        //1. 删除管理员信息
+        this.removeBatchByIds(ids);
+
+        //2. 删除管理员与角色的关联信息
+        adminRoleService.lambdaUpdate().in(AdminRole::getAdminId, ids).remove();
+        return true;
+    }
+
+    @Override
+    public boolean save(Admin entity) {
+        return super.save(entity);
     }
 }

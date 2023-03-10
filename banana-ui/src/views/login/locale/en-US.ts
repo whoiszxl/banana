@@ -1,5 +1,5 @@
 export default {
-  'login.form.title': 'Login to Arco Design Pro',
+  'login.form.title': 'Login to Banana Admin',
   'login.form.userName.errMsg': 'Username cannot be empty',
   'login.form.password.errMsg': 'Password cannot be empty',
   'login.form.login.errMsg': 'Login error, refresh and try again',
@@ -18,4 +18,5 @@ export default {
     'Internationalization, routing configuration, state management everything',
   'login.banner.slogan3': 'Access visualization enhancement tool AUX',
   'login.banner.subSlogan3': 'Realize flexible block development',
+  'login.form.captcha.placeholder': 'please enter verify code',
 };

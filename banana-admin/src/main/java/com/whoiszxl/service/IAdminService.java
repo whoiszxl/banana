@@ -3,7 +3,11 @@ package com.whoiszxl.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.whoiszxl.cqrs.command.AdminAddCommand;
 import com.whoiszxl.cqrs.command.AdminRoleUpdateCommand;
+import com.whoiszxl.cqrs.command.AdminUpdateCommand;
+import com.whoiszxl.cqrs.response.AdminDetailResponse;
 import com.whoiszxl.entity.Admin;
+
+import java.util.List;
 
 /**
  * <p>
@@ -28,4 +32,39 @@ public interface IAdminService extends IService<Admin> {
      * @return 是否更新成功
      */
     Boolean updateAdminRole(AdminRoleUpdateCommand command);
+
+    /**
+     * 切换管理员状态
+     * @return 是否切换成功
+     * @param adminId 管理员ID
+     */
+    Boolean switchStatus(Integer adminId);
+
+    /**
+     * 通过管理员ID重置管理员密码
+     * @param adminId 管理员ID
+     * @return 是否重置成功
+     */
+    Boolean resetPassword(Integer adminId);
+
+    /**
+     * 获取管理员的详情信息
+     * @param adminId
+     * @return
+     */
+    AdminDetailResponse adminDetail(Integer adminId);
+
+    /**
+     * 更新管理员
+     * @param adminUpdateCommand 更新参数
+     * @return 是否更新成功
+     */
+    boolean updateAdmin(AdminUpdateCommand adminUpdateCommand);
+
+    /**
+     * 批量删除管理员
+     * @param ids 管理员id集合
+     * @return 是否删除成功
+     */
+    boolean adminDelete(List<Integer> ids);
 }

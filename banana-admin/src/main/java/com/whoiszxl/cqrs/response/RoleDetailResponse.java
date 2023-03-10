@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -46,6 +47,10 @@ public class RoleDetailResponse implements Serializable {
 
     @Schema(description = "更新时间")
     private LocalDateTime updatedAt;
+
+    @Schema(description = "菜单ID集合")
+    private List<Integer> menuIds;
+
 
 
 }

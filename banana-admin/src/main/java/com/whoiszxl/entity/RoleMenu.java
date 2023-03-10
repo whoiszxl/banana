@@ -35,5 +35,8 @@ public class RoleMenu implements Serializable {
     @Schema(description = "菜单ID")
     private Integer menuId;
 
-
+    public RoleMenu(Integer roleId, Integer menuId) {
+        this.roleId = roleId;
+        this.menuId = menuId;
+    }
 }

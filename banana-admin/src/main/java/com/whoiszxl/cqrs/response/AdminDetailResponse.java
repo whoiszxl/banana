@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Schema(description = "管理员详情响应实体")
@@ -44,16 +45,8 @@ public class AdminDetailResponse {
     @Schema(description = "最后登录时间")
     private LocalDateTime lastLoginTime;
 
-    @Schema(description = "乐观锁")
-    @Version
-    private Long version;
-
     @Schema(description = "业务状态")
     private Integer status;
-
-    @Schema(description = "逻辑删除 1: 已删除， 0: 未删除")
-    @TableLogic
-    private Integer isDeleted;
 
     @Schema(description = "创建者")
     private String createdBy;
@@ -68,4 +61,12 @@ public class AdminDetailResponse {
     private LocalDateTime updatedAt;
 
 
+    @Schema(description = "权限集合")
+    private Set<String> permissions;
+
+    @Schema(description = "角色集合")
+    private Set<String> roles;
+
+    @Schema(description = "角色ID集合")
+    private Set<Integer> roleIds;
 }

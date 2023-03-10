@@ -37,6 +37,10 @@ const useUserStore = defineStore('user', {
   },
 
   actions: {
+    say() {
+      console.log("hello");
+    },
+
     switchRoles() {
       return new Promise((resolve) => {
         this.role = this.role === 'user' ? 'admin' : 'user';
@@ -62,9 +66,10 @@ const useUserStore = defineStore('user', {
 
     // Login
     async login(loginForm: LoginData) {
+      console.log("deeedd",loginForm);
       try {
-        const res = await userLogin(loginForm);
-        setToken(res.data.token);
+        const res = userLogin(loginForm);
+        console.log("deeedd",res);
       } catch (err) {
         clearToken();
         throw err;

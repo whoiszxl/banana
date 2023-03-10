@@ -20,7 +20,7 @@ public class AdminAddCommand {
     private String password;
 
     @Schema(description = "头像")
-    private String avatar;
+    private String avatar = "https://shopzz.oss-cn-guangzhou.aliyuncs.com/other/a1.jpg";
 
     @Schema(description = "姓名")
     private String realName;

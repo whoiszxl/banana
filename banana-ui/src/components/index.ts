@@ -11,6 +11,11 @@ import {
 } from 'echarts/components';
 import Chart from './chart/index.vue';
 import Breadcrumb from './breadcrumb/index.vue';
+import download from './download';
+import RangePicker from './range-picker/index.vue';
+import RightToolbar from './right-toolbar/index.vue';
+import SvgIcon from './svg-icon/index.vue';
+import IconSelect from './icon-select/index.vue';
 
 // Manually introduce ECharts modules to reduce packing size
 
@@ -29,7 +34,12 @@ use([
 
 export default {
   install(Vue: App) {
+    Vue.config.globalProperties.download = download;
     Vue.component('Chart', Chart);
     Vue.component('Breadcrumb', Breadcrumb);
+    Vue.component('RangePicker', RangePicker);
+    Vue.component('RightToolbar', RightToolbar);
+    Vue.component('SvgIcon', SvgIcon);
+    Vue.component('IconSelect', IconSelect);
   },
 };

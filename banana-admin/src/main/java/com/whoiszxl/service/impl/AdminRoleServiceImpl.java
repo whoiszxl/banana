@@ -32,7 +32,7 @@ public class AdminRoleServiceImpl extends ServiceImpl<AdminRoleMapper, AdminRole
             return;
         }
 
-        adminRoleMapper.delete(this.lambdaQuery().eq(AdminRole::getRoleId, id));
+        this.lambdaUpdate().eq(AdminRole::getAdminId, id).remove();
 
         List<AdminRole> adminRoleList
                 = roleIds.stream().map(roleId -> new AdminRole(roleId, id)).collect(Collectors.toList());

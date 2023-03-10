@@ -3,6 +3,7 @@ package com.whoiszxl.mapper;
 import com.whoiszxl.core.base.BaseMapper;
 import com.whoiszxl.entity.Admin;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * <p>
@@ -14,5 +15,13 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface AdminMapper extends BaseMapper<Admin> {
+
+    /**
+     * 切换管理员状态
+     * @param adminId 管理员ID
+     * @return
+     */
+    @Update("update sys_admin set status = (case status when 1 then 0 else 1 end) where id = #{adminId}")
+    Boolean switchStatus(Integer adminId);
 
 }

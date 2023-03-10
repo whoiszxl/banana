@@ -6,6 +6,8 @@ package com.whoiszxl.core.constants;
  */
 public interface CommonConstants {
 
+    String DEFAULT_PASSWORD = "123456";
+
     String PASSWORD_SALT = "banana";
 
     String SUPER_ADMIN = "admin";

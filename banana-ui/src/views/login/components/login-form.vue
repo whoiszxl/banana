@@ -10,98 +10,125 @@
       layout="vertical"
       @submit="handleSubmit"
     >
-      <a-form-item
-        field="username"
+      <!-- 登录用户名组件 -->
+      <a-form-item field="username"
         :rules="[{ required: true, message: $t('login.form.userName.errMsg') }]"
         :validate-trigger="['change', 'blur']"
         hide-label
       >
-        <a-input
-          v-model="userInfo.username"
-          :placeholder="$t('login.form.userName.placeholder')"
-        >
-          <template #prefix>
-            <icon-user />
-          </template>
+        <a-input v-model="userInfo.username" :placeholder="$t('login.form.userName.placeholder')">
+          <template #prefix> <icon-user /></template>
         </a-input>
       </a-form-item>
-      <a-form-item
-        field="password"
+
+      <!-- 登录密码组件 -->
+      <a-form-item field="password"
         :rules="[{ required: true, message: $t('login.form.password.errMsg') }]"
         :validate-trigger="['change', 'blur']"
         hide-label
       >
-        <a-input-password
-          v-model="userInfo.password"
-          :placeholder="$t('login.form.password.placeholder')"
-          allow-clear
-        >
-          <template #prefix>
-            <icon-lock />
-          </template>
+        <a-input-password v-model="userInfo.password" :placeholder="$t('login.form.password.placeholder')" allow-clear>
+          <template #prefix> <icon-lock /> </template>
         </a-input-password>
       </a-form-item>
+
+      <!-- 登录验证码组件 -->
+      <a-form-item class="login-form-captcha" field="captcha" hide-label>
+        <a-input
+            v-model="userInfo.captcha"
+            :placeholder="$t('login.form.captcha.placeholder')"
+            allow-clear
+            style="width: 63%"
+        >
+          <template #prefix><icon-check-circle /></template>
+        </a-input>
+        <img
+            :src="captchaImgBase64"
+            @click="getCaptcha"
+        />
+      </a-form-item>
+
       <a-space :size="16" direction="vertical">
-        <div class="login-form-password-actions">
+        <div class="login-form-remember-me">
           <a-checkbox
-            checked="rememberPassword"
-            :model-value="loginConfig.rememberPassword"
-            @change="setRememberPassword as any"
+              checked="rememberMe"
+              :model-value="loginConfig.rememberPassword"
+              @change="setRememberPassword"
           >
             {{ $t('login.form.rememberPassword') }}
           </a-checkbox>
-          <a-link>{{ $t('login.form.forgetPassword') }}</a-link>
         </div>
-        <a-button type="primary" html-type="submit" long :loading="loading">
+        <a-button
+            :loading="loading"
+            type="primary"
+            long
+            html-type="submit"
+        >
           {{ $t('login.form.login') }}
         </a-button>
-        <a-button type="text" long class="login-form-register-btn">
-          {{ $t('login.form.register') }}
-        </a-button>
       </a-space>
+
+
+
     </a-form>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { ref, reactive } from 'vue';
+
+  import { ValidatedError } from '@arco-design/web-vue';
+  import { getCurrentInstance, ref, reactive } from 'vue';
   import { useRouter } from 'vue-router';
-  import { Message } from '@arco-design/web-vue';
-  import { ValidatedError } from '@arco-design/web-vue/es/form/interface';
   import { useI18n } from 'vue-i18n';
   import { useStorage } from '@vueuse/core';
-  import { useUserStore } from '@/store';
+  import {useLoginStore} from '@/store';
   import useLoading from '@/hooks/loading';
-  import type { LoginData } from '@/api/user';
+  import {encryptByPublicKey} from "@/utils/password";
 
   const router = useRouter();
   const { t } = useI18n();
   const errorMessage = ref('');
   const { loading, setLoading } = useLoading();
-  const userStore = useUserStore();
+  const captchaImgBase64 = ref('');
+  const loginStore = useLoginStore();
+  const { proxy } = getCurrentInstance() as any;
 
   const loginConfig = useStorage('login-config', {
     rememberPassword: true,
-    username: 'admin', // 演示默认值
-    password: 'admin', // demo default value
+    username: '',
+    password: '',
+    captcha: '',
+    uuid: '',
   });
   const userInfo = reactive({
     username: loginConfig.value.username,
     password: loginConfig.value.password,
+    captcha: loginConfig.value.captcha,
+    uuid: loginConfig.value.captcha
   });
 
-  const handleSubmit = async ({
-    errors,
-    values,
-  }: {
+  const getCaptcha = () => {
+    loginStore.getImgCaptcha().then((res) => {
+      userInfo.uuid = res.data.uuid;
+      captchaImgBase64.value = res.data.captcha;
+    });
+  };
+  getCaptcha();
+
+  const handleSubmit = async ({errors, values}: {
     errors: Record<string, ValidatedError> | undefined;
     values: Record<string, any>;
   }) => {
     if (loading.value) return;
     if (!errors) {
       setLoading(true);
-      try {
-        await userStore.login(values as LoginData);
+      loginStore.login({
+        username: values.username,
+        password: encryptByPublicKey(values.password) || '',
+        captcha: values.captcha,
+        uuid: values.uuid
+      }).then(() => {
+
         const { redirect, ...othersQuery } = router.currentRoute.value.query;
         router.push({
           name: (redirect as string) || 'Workplace',
@@ -109,20 +136,23 @@
             ...othersQuery,
           },
         });
-        Message.success(t('login.form.login.success'));
+
         const { rememberPassword } = loginConfig.value;
         const { username, password } = values;
-        // 实际生产环境需要进行加密存储。
-        // The actual production environment requires encrypted storage.
+
         loginConfig.value.username = rememberPassword ? username : '';
         loginConfig.value.password = rememberPassword ? password : '';
-      } catch (err) {
-        errorMessage.value = (err as Error).message;
-      } finally {
-        setLoading(false);
-      }
+
+        proxy.$message.success(t('login.form.login.success'));
+
+      }).catch(() => {
+        getCaptcha();
+      }).finally(() => {
+        loading.value = false;
+      });
     }
   };
+
   const setRememberPassword = (value: boolean) => {
     loginConfig.value.rememberPassword = value;
   };

@@ -220,7 +220,7 @@ spring:
 banana:
   captcha:
     image:
-      type: GIF
+      type: SPEC
       length: 5
       expirationInMinutes: 10
       width: 128

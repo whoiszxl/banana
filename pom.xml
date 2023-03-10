@@ -77,6 +77,7 @@
         <bitwalker.version>1.21</bitwalker.version>
         <commons-dbutils.version>1.7</commons-dbutils.version>
         <dozer.version>6.5.2</dozer.version>
+        <jsch.version>0.1.55</jsch.version>
 
 
         <!-- 缓存相关依赖 -->
@@ -313,6 +314,13 @@
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
                 <version>${gson.version}</version>
+            </dependency>
+
+            <!-- shell连接工具 -->
+            <dependency>
+                <groupId>com.jcraft</groupId>
+                <artifactId>jsch</artifactId>
+                <version>${jsch.version}</version>
             </dependency>
 
             <!-- YML敏感信息加密 -->
