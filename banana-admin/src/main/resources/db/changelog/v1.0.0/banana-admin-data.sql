@@ -29,6 +29,20 @@ INSERT INTO `sys_menu` VALUES (16, '菜单修改', 14, 1, NULL, NULL, NULL, 0, 1
 INSERT INTO `sys_menu` VALUES (17, '菜单删除', 14, 1, NULL, NULL, NULL, 0, 1, 1, 'system:menu:delete', NULL, NULL, 1, 1, 0, '', '', '2023-11-08 16:07:45', '2023-03-08 16:08:30');
 INSERT INTO `sys_menu` VALUES (18, '菜单导出', 14, 1, NULL, NULL, NULL, 0, 1, 1, 'system:menu:export', NULL, NULL, 1, 1, 0, '', '', '2023-11-08 16:07:45', '2023-03-08 16:08:30');
 
+INSERT INTO `sys_menu` VALUES (10004, '实战管理', 0, 1, 'ops', NULL, NULL, 0, 1, 0, 'ops', 'cloud', 999, 1, 1, 0, '', '', '2023-03-11 01:46:22', '2023-03-11 02:27:38');
+INSERT INTO `sys_menu` VALUES (10005, '项目管理', 10004, 2, 'ops-project', 'ops-project', NULL, 0, 1, 1, 'ops:project:list', 'apps', 999, 1, 1, 0, '', '', '2023-03-11 01:47:34', '2023-03-11 02:27:41');
+INSERT INTO `sys_menu` VALUES (10006, '项目新增', 10005, 3, NULL, NULL, NULL, 1, 1, 1, 'ops:project:add', NULL, 999, 1, 1, 0, '', '', '2023-03-11 01:48:12', '2023-03-11 01:48:12');
+INSERT INTO `sys_menu` VALUES (10007, '项目修改', 10005, 3, NULL, NULL, NULL, 1, 1, 1, 'ops:project:update', NULL, 999, 1, 1, 0, '', '', '2023-03-11 01:48:34', '2023-03-11 01:48:34');
+INSERT INTO `sys_menu` VALUES (10008, '项目删除', 10005, 3, NULL, NULL, NULL, 1, 1, 1, 'ops:project:delete', NULL, 999, 1, 1, 0, '', '', '2023-03-11 01:48:51', '2023-03-11 01:48:51');
+INSERT INTO `sys_menu` VALUES (10009, '项目导出', 10005, 3, '', '', '', 1, 1, 1, 'ops:project:export', '', 999, 1, 1, 0, '', '', '2023-03-11 01:49:16', '2023-03-11 01:52:02');
+
+INSERT INTO `sys_menu` VALUES (10010, '实例管理', 10004, 2, 'ops-server', 'ops-server', NULL, 0, 1, 1, 'ops:server:list', 'apps', 999, 1, 1, 0, '', '', '2023-03-11 01:47:34', '2023-03-11 02:27:41');
+INSERT INTO `sys_menu` VALUES (10011, '实例新增', 10010, 3, NULL, NULL, NULL, 1, 1, 1, 'ops:server:add', NULL, 999, 1, 1, 0, '', '', '2023-03-11 01:48:12', '2023-03-11 01:48:12');
+INSERT INTO `sys_menu` VALUES (10012, '实例修改', 10010, 3, NULL, NULL, NULL, 1, 1, 1, 'ops:server:update', NULL, 999, 1, 1, 0, '', '', '2023-03-11 01:48:34', '2023-03-11 01:48:34');
+INSERT INTO `sys_menu` VALUES (10013, '实例删除', 10010, 3, NULL, NULL, NULL, 1, 1, 1, 'ops:server:delete', NULL, 999, 1, 1, 0, '', '', '2023-03-11 01:48:51', '2023-03-11 01:48:51');
+INSERT INTO `sys_menu` VALUES (10014, '实例导出', 10010, 3, '', '', '', 1, 1, 1, 'ops:server:export', '', 999, 1, 1, 0, '', '', '2023-03-11 01:49:16', '2023-03-11 01:52:02');
+
+
 INSERT INTO `sys_role` VALUES (1, 'admin', 'admin', '超级管理员', 1, 1, 0, '', '', '2023-03-04 15:45:04', '2023-03-04 15:45:12');
 INSERT INTO `sys_role` VALUES (2, 'dev', 'dev', '开发', 1, 1, 0, '', '', '2023-03-04 15:45:26', '2023-03-04 15:45:26');
 INSERT INTO `sys_role` VALUES (3, 'test', 'test', '测试', 1, 1, 0, '', '', '2023-03-04 15:45:37', '2023-03-04 15:45:38');

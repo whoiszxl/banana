@@ -26,7 +26,7 @@ public class LoginMember {
     private String realName;
 
     @Schema(description = "性别（0未知 1男 2女）")
-    private Boolean gender;
+    private Integer gender;
 
     @Schema(description = "手机号")
     private String mobile;

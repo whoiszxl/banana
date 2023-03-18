@@ -30,6 +30,13 @@ import localeAdmin from '@/views/system/admin/locale/zh-CN';
 import localeMenu from '@/views/system/menu/locale/zh-CN';
 import localeRole from '@/views/system/role/locale/zh-CN';
 
+import localeBaseConfig from '@/views/ops/baseConfig/locale/zh-CN';
+import localeProject from '@/views/ops/project/locale/zh-CN';
+import localeScript from '@/views/ops/script/locale/zh-CN';
+import localeServer from '@/views/ops/server/locale/zh-CN';
+import localeSoftware from '@/views/ops/software/locale/zh-CN';
+import localeDeploy from '@/views/ops/deploy/locale/zh-CN';
+
 import localeSettings from './zh-CN/settings';
 
 
@@ -42,11 +49,12 @@ export default {
   'menu.server.monitor': '实时监控-服务端',
   'menu.list': '列表页',
   'menu.system': '系统管理',
+  'menu.ops': '项目管理',
   'menu.result': '结果页',
   'menu.exception': '异常页',
   'menu.form': '表单页',
   'menu.profile': '详情页',
-  'menu.visualization': '数据可视化',
+  'menu.visualization': '基础组件',
   'menu.user': '个人中心',
   'menu.arcoWebsite': 'Arco Design',
   'menu.faq': '常见问题',
@@ -76,5 +84,13 @@ export default {
 
   ...localeAdmin,
   ...localeRole,
-  ...localeMenu
+  ...localeMenu,
+
+  ...localeBaseConfig,
+  ...localeProject,
+  ...localeScript,
+  ...localeServer,
+  ...localeSoftware,
+  ...localeDeploy,
+
 };

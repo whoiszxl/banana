@@ -3,3 +3,7 @@ databaseChangeLog:
       file: db/changelog/v1.0.0/banana-admin-table.sql
   - include:
       file: db/changelog/v1.0.0/banana-admin-data.sql
+  - include:
+      file: db/changelog/v1.0.0/banana-server-table.sql
+  - include:
+      file: db/changelog/v1.0.0/banana-server-data.sql

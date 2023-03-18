@@ -1,5 +1,6 @@
 package com.whoiszxl.cqrs.command;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ import java.io.Serializable;
  */
 @Data
 @Schema(description = "系统菜单更新命令")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MenuUpdateCommand implements Serializable {
 
     @Schema(description = "主键")

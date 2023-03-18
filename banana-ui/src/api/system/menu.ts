@@ -80,7 +80,7 @@ export function getMenu(id: number) {
 
 // 添加菜单
 export function addMenu(command: MenuSaveCommand) {
-    return axios.post(BASE_URL, command);
+    return axios.post(`${BASE_URL}/add`, command);
 }
 
 // 更新菜单

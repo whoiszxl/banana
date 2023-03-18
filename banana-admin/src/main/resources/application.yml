@@ -32,7 +32,7 @@ banana:
 
 # 服务端口
 server:
-  port: 10001
+  port: 20001
 
 
 --- # Liquibase 配置
@@ -79,7 +79,7 @@ sa-token:
   # token有效期（单位：秒，默认 30 天，-1 代表永不过期）
   timeout: 86400
   # token临时有效期（单位：秒，指定时间内无操作就视为 token 过期）
-  activity-timeout: 1800
+  activity-timeout: -1
   # 是否打开自动续签（如果此值为 true，框架会在每次直接或间接调用 getLoginId() 时进行一次过期检查与续签操作）
   auto-renew: true
   # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
@@ -104,7 +104,7 @@ sa-token:
     # Redis服务器连接密码（默认为空）
     password: Hello123456
     # 连接超时时间（毫秒）
-    timeout: 6000ms
+    timeout: 30000ms
 
 --- # 数据源设置
 spring:

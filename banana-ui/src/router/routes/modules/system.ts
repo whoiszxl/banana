@@ -9,9 +9,20 @@ const LIST: AppRouteRecordRaw = {
     locale: 'menu.system',
     requiresAuth: true,
     icon: 'icon-list',
-    order: 2,
+    order: 0,
   },
   children: [
+    {
+      path: 'workplace',
+      name: 'Workplace',
+      component: () => import('@/views/dashboard/workplace/index.vue'),
+      meta: {
+        locale: 'menu.dashboard.workplace',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    
     {
       path: 'system-admin', // The midline path complies with SEO specifications
       name: 'Admin',

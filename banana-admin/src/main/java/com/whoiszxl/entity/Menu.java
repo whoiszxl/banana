@@ -2,6 +2,7 @@ package com.whoiszxl.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,8 +17,7 @@ import java.time.LocalDateTime;
  * @author whoiszxl
  * @since 2023-03-02
  */
-@Getter
-@Setter
+@Data
 @TableName("sys_menu")
 @Schema(description = "系统菜单")
 public class Menu implements Serializable {

@@ -26,6 +26,17 @@ import locale500 from '@/views/exception/500/locale/en-US';
 import localeUserInfo from '@/views/user/info/locale/en-US';
 import localeUserSetting from '@/views/user/setting/locale/en-US';
 
+import localeAdmin from '@/views/system/admin/locale/en-US';
+import localeMenu from '@/views/system/menu/locale/en-US';
+import localeRole from '@/views/system/role/locale/en-US';
+
+import localeBaseConfig from '@/views/ops/baseConfig/locale/en-US';
+import localeProject from '@/views/ops/project/locale/en-US';
+import localeScript from '@/views/ops/script/locale/en-US';
+import localeServer from '@/views/ops/server/locale/en-US';
+import localeSoftware from '@/views/ops/software/locale/en-US';
+import localeDeploy from '@/views/ops/deploy/locale/en-US';
+
 import localeSettings from './en-US/settings';
 
 export default {
@@ -34,6 +45,8 @@ export default {
   'menu.server.workplace': 'Workplace-Server',
   'menu.server.monitor': 'Monitor-Server',
   'menu.list': 'List',
+  'menu.system': 'System',
+  'menu.ops': 'Ops',
   'menu.result': 'Result',
   'menu.exception': 'Exception',
   'menu.form': 'Form',
@@ -64,4 +77,15 @@ export default {
   ...locale500,
   ...localeUserInfo,
   ...localeUserSetting,
+
+  ...localeAdmin,
+  ...localeRole,
+  ...localeMenu,
+
+  ...localeBaseConfig,
+  ...localeProject,
+  ...localeScript,
+  ...localeServer,
+  ...localeSoftware,
+  ...localeDeploy,
 };

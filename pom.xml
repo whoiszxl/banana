@@ -93,6 +93,11 @@
         <qrcode.version>3.2.1</qrcode.version>
         <encryption-tools.version>1.0.0</encryption-tools.version>
 
+
+        <!-- 云服务器 -->
+        <tencentcloud-sdk-java.version>3.1.711</tencentcloud-sdk-java.version>
+        <aliyun-java-sdk-ecs.version>4.23.12</aliyun-java-sdk-ecs.version>
+
     </properties>
 
 
@@ -376,6 +381,12 @@
                 <artifactId>javase</artifactId>
                 <version>${qrcode.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-ecs</artifactId>
+                <version>${aliyun-java-sdk-ecs.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -435,6 +446,13 @@
             <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.tencentcloudapi</groupId>
+            <artifactId>tencentcloud-sdk-java</artifactId>
+            <version>${tencentcloud-sdk-java.version}</version>
+        </dependency>
+
     </dependencies>
 
 

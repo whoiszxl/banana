@@ -494,7 +494,7 @@
       size: 10,
       sort: ['createdAt,desc'],
     },
-    roleSaveForm: {} as AdminSaveCommand,
+    adminAddForm: {} as AdminSaveCommand,
     rules: {
       username: [{ required: true, message: '请输入管理员用户名' }],
       password: [{ required: true, message: '请输入管理员密码' }],

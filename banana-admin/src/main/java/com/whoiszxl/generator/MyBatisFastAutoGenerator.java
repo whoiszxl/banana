@@ -31,14 +31,14 @@ public class MyBatisFastAutoGenerator {
     private static final String PROJECT_NAME = "banana-admin";
 
     private static final String[] TABLE_PREFIX = new String[]{
-            "sys_","fms_"
+            "sys_","fms_","ops_"
     };
 
     private static final String[] DB_TABLES = new String[]{
-            "sys_admin", "sys_admin_opt_log", "sys_admin_role", "sys_role", "sys_role_menu", "sys_menu"
+            "ops_deploy"
     };
 
-    private static final String DB_URL = "jdbc:mysql://IP:3300/banana?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&rewriteBatchedStatements=true&autoReconnect=true&maxReconnects=10&failOverReadOnly=false";
+    private static final String DB_URL = "jdbc:mysql://106.13.7.251:3300/platform-server?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&rewriteBatchedStatements=true&autoReconnect=true&maxReconnects=10&failOverReadOnly=false";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "123456";
 
